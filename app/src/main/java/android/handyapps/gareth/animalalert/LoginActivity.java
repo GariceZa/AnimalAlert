@@ -15,12 +15,10 @@ public class LoginActivity extends Activity {
     }
 
     public void login(View view) {
-
         Toast.makeText(getApplicationContext(),"You Clicked login",Toast.LENGTH_SHORT).show();
     }
 
     public void register(View view) {
-
         Toast.makeText(getApplicationContext(),"You Clicked Register",Toast.LENGTH_SHORT).show();
     }
 }
