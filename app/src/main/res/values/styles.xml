@@ -1,0 +1,15 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+        <item name="android:icon">@android:color/transparent</item> <!-- removing actionbar icon -->
+   </style>
+
+    <!-- setting the color of the actionbar -->
+    <style name="ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#f68c06</item>
+
+    </style>
+
+</resources>
