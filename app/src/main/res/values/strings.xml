@@ -3,8 +3,13 @@
 
     <string name="app_name">Animal Alert</string>
     <string name="login">Login</string>
+    <string name="enable">Enable</string>
+    <string name="enable_location_service_title">Enable Location Services</string>
+    <string name="enable_location_service_message">Your location services are off, to register it needs to be on</string>
     <string name="register">Register</string>
+    <string name="cancel">Cancel</string>
     <string name="remember_me">Remember me</string>
     <string name="registration_details">Enter your details</string>
+    <string name="title_activity_google_play_services">GooglePlayServices</string>
 
 </resources>
