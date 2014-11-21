@@ -11,12 +11,6 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/registration_details"
-            android:textSize="@dimen/activity_registration_textsize"
-            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/regFirstName"
@@ -43,6 +37,7 @@
             android:id="@+id/regPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:password="true"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:hint="Password"/>
 
@@ -50,6 +45,7 @@
             android:id="@+id/regConfirmPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:password="true"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:hint="Confirm password"/>
 
@@ -57,8 +53,33 @@
             android:id="@+id/regLocation"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/activity_registration_textsize"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:text="Detecting your address"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TableRow>
+                <Button
+                    android:id="@+id/btnRegisterUser"
+                    android:text="@string/register"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#f68c06"
+                    android:onClick="registerUser"/>
+
+                <Button
+                    android:id="@+id/btnRegistrationCancel"
+                    android:text="@string/cancel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:background="#f68c06"
+                    android:onClick="cancelRegistration"/>
+            </TableRow>
+        </TableLayout>
 
     </LinearLayout>
 </ScrollView>
