@@ -1,48 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".RegistrationDialog">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical">
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="@dimen/activity_layout_width_sw480dp"
             android:layout_height="wrap_content"
-            android:text="std"/>
+            android:text="480dp"/>
 
         <EditText
             android:id="@+id/regFirstName"
-            android:layout_width="fill_parent"
+            android:layout_width="@dimen/activity_layout_width_sw480dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:hint="Firstname" />
 
         <EditText
             android:id="@+id/regSurame"
-            android:layout_width="fill_parent"
+            android:layout_width="@dimen/activity_layout_width_sw480dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:hint="Surname" />
 
         <EditText
             android:id="@+id/regUsername"
-            android:layout_width="fill_parent"
+            android:layout_width="@dimen/activity_layout_width_sw480dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:hint="Username" />
 
         <EditText
             android:id="@+id/regPassword"
-            android:layout_width="fill_parent"
+            android:layout_width="@dimen/activity_layout_width_sw480dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:hint="Password"
@@ -50,15 +53,16 @@
 
         <EditText
             android:id="@+id/regConfirmPassword"
-            android:layout_width="fill_parent"
+            android:layout_width="@dimen/activity_layout_width_sw480dp"
             android:layout_height="wrap_content"
+            android:layout_below="@id/regPassword"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:hint="Confirm password"
             android:password="true" />
 
         <TextView
             android:id="@+id/regLocation"
-            android:layout_width="fill_parent"
+            android:layout_width="@dimen/activity_layout_width_sw480dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:text="@string/detecting_address"
@@ -67,10 +71,11 @@
 
         <Button
             android:id="@+id/btnRegisterUser"
-            android:layout_width="fill_parent"
+            android:layout_width="@dimen/activity_layout_width_sw480dp"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
-            android:background="#f68c06"
+            android:background="@drawable/custom_btn_click"
             android:onClick="registerUser"
             android:text="@string/register" />
 

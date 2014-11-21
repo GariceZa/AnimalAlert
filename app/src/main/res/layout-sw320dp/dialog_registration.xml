@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="std"/>
+            android:text="320dp"/>
 
         <EditText
             android:id="@+id/regFirstName"
@@ -70,7 +70,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
-            android:background="#f68c06"
+            android:background="@drawable/custom_btn_click"
             android:onClick="registerUser"
             android:text="@string/register" />
 

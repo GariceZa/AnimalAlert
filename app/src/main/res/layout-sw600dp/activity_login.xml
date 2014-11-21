@@ -9,7 +9,7 @@
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="350dp"
+        android:layout_width="@dimen/activity_layout_width_sw600dp"
         android:layout_height="wrap_content"
         android:hint="Username"
         android:layout_centerHorizontal="true"
@@ -17,7 +17,7 @@
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="350dp"
+        android:layout_width="@dimen/activity_layout_width_sw600dp"
         android:layout_height="wrap_content"
         android:password="true"
         android:hint="Password"
@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register"
-        android:background="#f68c06"
+        android:background="@drawable/custom_btn_click"
         android:layout_below="@id/password"
         android:layout_toLeftOf="@id/btnLogin"
         android:onClick="register"
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
-        android:background="#f68c06"
+        android:background="@drawable/custom_btn_click"
         android:layout_below="@id/password"
         android:layout_alignEnd="@id/password"
         android:layout_alignRight="@id/password"

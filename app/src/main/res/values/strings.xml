@@ -8,6 +8,7 @@
     <string name="enable_location_service_message">Your location services are off, to register it needs to be on</string>
     <string name="register">Register</string>
     <string name="cancel">Cancel</string>
+    <string name="detecting_address">Detecting your address...</string>
     <string name="remember_me">Remember me</string>
     <string name="registration_details">Enter your details</string>
     <string name="title_activity_google_play_services">GooglePlayServices</string>

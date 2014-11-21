@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name = "btn_color">#f68c06</color>
+    <color name="btn_click_color">@android:color/holo_blue_light</color>
+</resources>

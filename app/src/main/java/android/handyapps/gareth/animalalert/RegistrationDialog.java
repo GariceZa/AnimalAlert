@@ -2,8 +2,6 @@ package android.handyapps.gareth.animalalert;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
@@ -12,7 +10,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,9 +30,9 @@ public class RegistrationDialog extends Activity implements LocationListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_registration);
 
         if(locationServiceEnabled()){
+            setContentView(R.layout.dialog_registration);
             setupLocationUpdates();
             userAddress = (TextView)findViewById(R.id.regLocation);
         }
@@ -44,11 +41,11 @@ public class RegistrationDialog extends Activity implements LocationListener {
         }
     }
 
+    // sets the provider and update intervals
     protected void setupLocationUpdates(){
 
         LocationManager locMan = (LocationManager)getSystemService(LOCATION_SERVICE);
         String provider = LocationManager.GPS_PROVIDER;
-        Location location = locMan.getLastKnownLocation(provider);
         locMan.requestLocationUpdates(provider,2000,5,this);
     }
 
@@ -73,19 +70,21 @@ public class RegistrationDialog extends Activity implements LocationListener {
         locationServiceAlert.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // cancels the alert dialog
-                dialog.cancel();
+                // closes the alert dialog
+                finish();
             }
         });
         AlertDialog alert = locationServiceAlert.create();
         alert.show();
     }
+
     // determines if the GPS location service is on
     private boolean locationServiceEnabled() {
         LocationManager locMan = (LocationManager) getSystemService(LOCATION_SERVICE);
         return locMan.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
+    // returns the users street address
     private String displayAddress(LatLng coOrdinates){
 
         //instantiating new Geocoder object
@@ -94,7 +93,7 @@ public class RegistrationDialog extends Activity implements LocationListener {
         try
         {
             //Address variables
-            String streetAdd = "",suburb = "";
+            String streetAdd,suburb;
             //----------------
 
             //adding address information to the addresses arraylist
@@ -137,5 +136,9 @@ public class RegistrationDialog extends Activity implements LocationListener {
     @Override
     public void onProviderDisabled(String provider) {
         // Do nothing
+    }
+
+    public void registerUser(View view) {
+        Toast.makeText(getApplicationContext(),"You clicked register",Toast.LENGTH_SHORT).show();
     }
 }
