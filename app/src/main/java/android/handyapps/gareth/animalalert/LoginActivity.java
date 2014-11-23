@@ -51,6 +51,7 @@ public class LoginActivity extends Activity {
 
                 if(response.equals("true")){
                     Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_SHORT).show();
+                    finish();
                     startActivity(new Intent(this,MainActivity.class));
                 }
                 else{
