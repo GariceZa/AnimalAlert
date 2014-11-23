@@ -12,5 +12,11 @@
     <string name="remember_me">Remember me</string>
     <string name="registration_details">Enter your details</string>
     <string name="title_activity_google_play_services">GooglePlayServices</string>
+    <string name="firstname">Firstname</string>
+    <string name="surname">Surname</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+
 
 </resources>

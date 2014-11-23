@@ -27,28 +27,29 @@
             android:layout_width="@dimen/activity_layout_width_sw480dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:hint="Firstname" />
+            android:hint="@string/firstname" />
 
         <EditText
             android:id="@+id/regSurame"
             android:layout_width="@dimen/activity_layout_width_sw480dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
-            android:hint="Surname" />
+            android:hint="@string/surname" />
 
         <EditText
-            android:id="@+id/regUsername"
+            android:id="@+id/regEmail"
             android:layout_width="@dimen/activity_layout_width_sw480dp"
             android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
-            android:hint="Username" />
+            android:hint="@string/email" />
 
         <EditText
             android:id="@+id/regPassword"
             android:layout_width="@dimen/activity_layout_width_sw480dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
-            android:hint="Password"
+            android:hint="@string/password"
             android:password="true" />
 
         <EditText
@@ -57,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/regPassword"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
-            android:hint="Confirm password"
+            android:hint="@string/confirm_password"
             android:password="true" />
 
         <TextView

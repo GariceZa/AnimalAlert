@@ -139,6 +139,6 @@ public class RegistrationDialog extends Activity implements LocationListener {
     }
 
     public void registerUser(View view) {
-        Toast.makeText(getApplicationContext(),"You clicked register",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"You clicked register",Toast.LENGTH_SHORT).show();
     }
 }
