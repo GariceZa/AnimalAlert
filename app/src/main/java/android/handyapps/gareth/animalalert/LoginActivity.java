@@ -1,14 +1,14 @@
 package android.handyapps.gareth.animalalert;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,21 +51,45 @@ public class LoginActivity extends Activity {
     }
 
     // setup the progress dialog
-    protected void startLoginProgressDialog(){
+    private void startLoginProgressDialog(){
+
+        String title = getResources().getString(R.string.logging_in);
+        String message = getResources().getString(R.string.please_wait);
 
         progressDialog = new ProgressDialog(LoginActivity.this);
-        progressDialog.setTitle("Logging in");
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setTitle(title);
+        progressDialog.setMessage(message);
         progressDialog.setCancelable(false);
         progressDialog.setIndeterminate(true);
         progressDialog.show();
-        //-------------------
+
     }
 
     // dismisses the progress dialog
-    protected void stopLoginProgressDialog(){
+    private void stopLoginProgressDialog(){
 
         progressDialog.dismiss();
+    }
+
+    // displays an alert dialog if the users credentials are incorrect
+    private void loginError(){
+
+        String error    = getResources().getString(R.string.error);
+        String message  = getResources().getString(R.string.username_password_incorrect);
+        String ok       = getResources().getString(R.string.ok);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        builder.setTitle(error);
+        builder.setMessage(message);
+        builder.setPositiveButton(ok,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog loginFailed = builder.create();
+        loginFailed.show();
     }
 
     // AsyncTask to check users credentials on background thread
@@ -73,11 +97,13 @@ public class LoginActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
+            // start the progress wheel
             startLoginProgressDialog();
         }
 
         @Override
         protected JSONArray doInBackground(LoginAPI... params) {
+            // return the response from getLoginResponse
             return params[0].getLoginResponse();
         }
 
@@ -92,15 +118,12 @@ public class LoginActivity extends Activity {
                     // stores result from login.php
                     response = json.getString("response");
 
-                    Log.v("--GET RESPONSE--",response);
-
                     if(response.equals("true")){
-                        Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_LONG).show();
                         finish();
                         startActivity(new Intent(LoginActivity.this,MainActivity.class));
                     }
                     else{
-                        Toast.makeText(getApplicationContext(),"Username/password incorrect",Toast.LENGTH_LONG).show();
+                        loginError();
                     }
                 }
                 catch (JSONException e) {
@@ -109,7 +132,6 @@ public class LoginActivity extends Activity {
                 finally {
                     stopLoginProgressDialog();
                 }
-
             }
         }
     }

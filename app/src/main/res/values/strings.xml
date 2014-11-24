@@ -14,6 +14,11 @@
     <string name="title_activity_google_play_services">GooglePlayServices</string>
     <string name="firstname">Firstname</string>
     <string name="surname">Surname</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
+    <string name="logging_in">Logging in</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="username_password_incorrect">Username or password incorrect</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>

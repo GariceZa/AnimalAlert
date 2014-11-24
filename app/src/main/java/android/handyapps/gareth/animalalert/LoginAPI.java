@@ -1,7 +1,5 @@
 package android.handyapps.gareth.animalalert;
 
-import android.util.Log;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -28,44 +26,42 @@ public class LoginAPI {
     public JSONArray getLoginResponse(){
 
         String url = "http://animalalert.garethprice.co.za/login.php?email=" + email + "&password=" + password;
-        HttpEntity httpEntity = null;
+        HttpEntity httpEntity;
         JSONArray jsonArray = null;
 
-        try{
-            // Creating a new DefaultHttpClient
+        try {
+            // Creating a new DefaultHttpClient to establish connection
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            // HttpGet to get data from the php page
+            // retrieves information from the url
             HttpGet httpGet = new HttpGet(url);
 
-            // httpResponse executes httpGet
+            // the http response
             HttpResponse httpResponse = httpClient.execute(httpGet);
 
-            // Obtains the message entity of this response, if any.
+            // Obtains the message entity of this response
             httpEntity = httpResponse.getEntity();
 
+            if (httpEntity != null) {
+
+                try {
+                    String entityResponse = EntityUtils.toString(httpEntity);
+                    entityResponse = "[" + entityResponse + "]";
+                    jsonArray = new JSONArray(entityResponse);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         catch (ClientProtocolException e) {
             e.printStackTrace();
         }
         catch (IOException e) {
             e.printStackTrace();
-        }
-
-        if(httpEntity != null){
-            try{
-                String entityResponse = EntityUtils.toString(httpEntity);
-                entityResponse = "["+entityResponse+"]";
-                Log.v("--Entity Response--",entityResponse);
-
-                jsonArray = new JSONArray(entityResponse);
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-            catch (JSONException e) {
-                e.printStackTrace();
-            }
         }
 
     return jsonArray;
