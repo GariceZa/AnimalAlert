@@ -2,6 +2,7 @@ package android.handyapps.gareth.animalalert;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
@@ -9,12 +10,19 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Locale;
@@ -26,6 +34,9 @@ public class RegistrationDialog extends Activity implements LocationListener {
 
     TextView userAddress;
     LatLng coOrdinates;
+    private ProgressDialog progressDialog;
+    private EditText name,surname,email,password;
+    private String userName,userSurname,userEmail,userPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +45,13 @@ public class RegistrationDialog extends Activity implements LocationListener {
         if(locationServiceEnabled()){
             setContentView(R.layout.dialog_registration);
             setupLocationUpdates();
+            //-------------
             userAddress = (TextView)findViewById(R.id.regLocation);
+            name        = (EditText)findViewById(R.id.regFirstName);
+            surname     = (EditText)findViewById(R.id.regSurame);
+            email       = (EditText)findViewById(R.id.regEmail);
+            password    = (EditText)findViewById(R.id.regPassword);
+            //-------------
         }
         else{
             locationServiceDisabledAlert();
@@ -139,6 +156,76 @@ public class RegistrationDialog extends Activity implements LocationListener {
     }
 
     public void registerUser(View view) {
-        Toast.makeText(this,"You clicked register",Toast.LENGTH_SHORT).show();
+
+        userName    = name.getText().toString();
+        userSurname = surname.getText().toString();
+        userEmail   = email.getText().toString();
+        userPassword = password.getText().toString();
+
+        new RegistrationResponse().execute(new RegistrationAPI(userName,userSurname,userEmail,userPassword));
+    }
+
+    // setup the progress dialog
+    private void startRegistrationProgressDialog() {
+
+        String title = getResources().getString(R.string.registering);
+        String message = getResources().getString(R.string.please_wait);
+
+        progressDialog = new ProgressDialog(RegistrationDialog.this);
+        progressDialog.setTitle(title);
+        progressDialog.setMessage(message);
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+
+    }
+
+    // dismisses the progress dialog
+    private void stopRegistrationProgressDialog() {
+        progressDialog.dismiss();
+    }
+
+
+   private class RegistrationResponse extends AsyncTask<RegistrationAPI,Long,JSONArray> {
+
+
+       @Override
+        protected void onPreExecute() {
+           // start the progress wheel
+           startRegistrationProgressDialog();
+        }
+
+       @Override
+       protected JSONArray doInBackground(RegistrationAPI... params) {
+           return params[0].getRegistrationResponse();
+       }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            String response;
+
+            for(int i = 0; i <jsonArray.length();i++){
+                try{
+                    JSONObject json = jsonArray.getJSONObject(i);
+
+                    // stores result from userRegistration.php
+                    response = json.getString("response");
+
+                    if(response.equals("true")){
+                        finish();
+                        Toast.makeText(RegistrationDialog.this,"Registration complete",Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Log.v("--REGISTRATION ERROR--", "" + response);
+                    }
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                finally {
+                    stopRegistrationProgressDialog();
+                }
+            }
+        }
     }
 }

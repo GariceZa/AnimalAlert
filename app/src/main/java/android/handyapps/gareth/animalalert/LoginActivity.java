@@ -74,14 +74,10 @@ public class LoginActivity extends Activity {
     // displays an alert dialog if the users credentials are incorrect
     private void loginError(){
 
-        String error    = getResources().getString(R.string.error);
-        String message  = getResources().getString(R.string.username_password_incorrect);
-        String ok       = getResources().getString(R.string.ok);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-        builder.setTitle(error);
-        builder.setMessage(message);
-        builder.setPositiveButton(ok,new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.error);
+        builder.setMessage(R.string.username_password_incorrect);
+        builder.setPositiveButton(R.string.ok,new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

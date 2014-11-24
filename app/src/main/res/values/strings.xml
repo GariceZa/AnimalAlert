@@ -16,7 +16,8 @@
     <string name="surname">Surname</string>
     <string name="error">Error</string>
     <string name="ok">OK</string>
-    <string name="logging_in">Logging in</string>
+    <string name="logging_in">Logging In</string>
+    <string name="registering">Registering Your Account</string>
     <string name="please_wait">Please wait...</string>
     <string name="username_password_incorrect">Username or password incorrect</string>
     <string name="email">Email</string>
