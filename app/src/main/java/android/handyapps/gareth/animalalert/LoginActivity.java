@@ -1,6 +1,7 @@
 package android.handyapps.gareth.animalalert;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,7 +18,8 @@ import org.json.JSONObject;
 public class LoginActivity extends Activity {
 
     private EditText email,password;
-    String userEmail,userPassword;
+    private String userEmail,userPassword;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,34 +39,6 @@ public class LoginActivity extends Activity {
 
     }
 
-    private void response(JSONArray jsonArray) {
-        String response;
-
-        for(int i = 0; i <jsonArray.length();i++){
-            try{
-                JSONObject json = jsonArray.getJSONObject(i);
-
-                // stores result from login.php
-                response = json.getString("response");
-
-                Log.v("--GET RESPONSE--",response);
-
-                if(response.equals("true")){
-                    Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_SHORT).show();
-                    finish();
-                    startActivity(new Intent(this,MainActivity.class));
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),"Username/password incorrect",Toast.LENGTH_SHORT).show();
-                }
-            }
-            catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
     public void register(View view) {
        // create GPS object
        GPS gps = new GPS(this);
@@ -76,8 +50,31 @@ public class LoginActivity extends Activity {
        }
     }
 
+    // setup the progress dialog
+    protected void startLoginProgressDialog(){
+
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setTitle("Logging in");
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+        //-------------------
+    }
+
+    // dismisses the progress dialog
+    protected void stopLoginProgressDialog(){
+
+        progressDialog.dismiss();
+    }
+
     // AsyncTask to check users credentials on background thread
     private class LoginResponse extends AsyncTask<LoginAPI,Long,JSONArray>{
+
+        @Override
+        protected void onPreExecute() {
+            startLoginProgressDialog();
+        }
 
         @Override
         protected JSONArray doInBackground(LoginAPI... params) {
@@ -86,7 +83,34 @@ public class LoginActivity extends Activity {
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            response(jsonArray);
+            String response;
+
+            for(int i = 0; i <jsonArray.length();i++){
+                try{
+                    JSONObject json = jsonArray.getJSONObject(i);
+
+                    // stores result from login.php
+                    response = json.getString("response");
+
+                    Log.v("--GET RESPONSE--",response);
+
+                    if(response.equals("true")){
+                        Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_SHORT).show();
+                        finish();
+                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"Username/password incorrect",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                finally {
+                    stopLoginProgressDialog();
+                }
+
+            }
         }
     }
 }
