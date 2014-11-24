@@ -95,12 +95,12 @@ public class LoginActivity extends Activity {
                     Log.v("--GET RESPONSE--",response);
 
                     if(response.equals("true")){
-                        Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_LONG).show();
                         finish();
                         startActivity(new Intent(LoginActivity.this,MainActivity.class));
                     }
                     else{
-                        Toast.makeText(getApplicationContext(),"Username/password incorrect",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Username/password incorrect",Toast.LENGTH_LONG).show();
                     }
                 }
                 catch (JSONException e) {
