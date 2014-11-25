@@ -12,7 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,11 +32,11 @@ import java.util.Locale;
  */
 public class RegistrationDialog extends Activity implements LocationListener {
 
-    TextView userAddress;
-    LatLng coOrdinates;
+    private TextView userAddress;
+    private LatLng coOrdinates;
     private ProgressDialog progressDialog;
-    private EditText name,surname,email,password;
-    private String userName,userSurname,userEmail,userPassword;
+    private EditText name,surname,email,password,confirmPassword;
+    private String userName,userSurname,userEmail,userPassword,userLocation,regError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,21 +45,26 @@ public class RegistrationDialog extends Activity implements LocationListener {
         if(locationServiceEnabled()){
             setContentView(R.layout.dialog_registration);
             setupLocationUpdates();
-            //-------------
-            userAddress = (TextView)findViewById(R.id.regLocation);
-            name        = (EditText)findViewById(R.id.regFirstName);
-            surname     = (EditText)findViewById(R.id.regSurame);
-            email       = (EditText)findViewById(R.id.regEmail);
-            password    = (EditText)findViewById(R.id.regPassword);
-            //-------------
+            setupRegistrationViews();
         }
         else{
             locationServiceDisabledAlert();
         }
     }
 
+    // setting ui views
+    private void setupRegistrationViews(){
+
+        name            = (EditText)findViewById(R.id.regFirstName);
+        surname         = (EditText)findViewById(R.id.regSurame);
+        email           = (EditText)findViewById(R.id.regEmail);
+        password        = (EditText)findViewById(R.id.regPassword);
+        confirmPassword = (EditText)findViewById(R.id.regConfirmPassword);
+        userAddress     = (TextView)findViewById(R.id.regLocation);
+    }
+
     // sets the provider and update intervals
-    protected void setupLocationUpdates(){
+    private void setupLocationUpdates(){
 
         LocationManager locMan = (LocationManager)getSystemService(LOCATION_SERVICE);
         String provider = LocationManager.GPS_PROVIDER;
@@ -155,14 +160,50 @@ public class RegistrationDialog extends Activity implements LocationListener {
         // Do nothing
     }
 
+    // Validates the users registration input
+    private boolean validInput(){
+
+        // If any fields are empty
+        if(name.getText().toString().trim().length() == 0 || surname.getText().toString().trim().length() == 0
+                || email.getText().toString().trim().length() == 0 || password.getText().toString().trim().length() == 0 || confirmPassword.getText().toString().trim().length() == 0) {
+            regError = getResources().getString(R.string.empty_field);
+            return false;
+        }
+        // If the email address is not valid
+        else if(!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+            regError = getResources().getString(R.string.email_invalid);
+            return false;
+        }
+        // If the passwords do not match
+        else if(!password.getText().toString().trim().equals(confirmPassword.getText().toString().trim())){
+            regError = getResources().getString(R.string.password_mismatch);
+            return false;
+        }
+        // If the users address is still being detected
+        else if(userAddress.getText().equals(getResources().getString(R.string.detecting_address))){
+            regError = getResources().getString(R.string.address_not_detected);
+            return false;
+        }
+        else
+            return true;
+
+    }
+
+    // called when user clicks register
     public void registerUser(View view) {
 
-        userName    = name.getText().toString();
-        userSurname = surname.getText().toString();
-        userEmail   = email.getText().toString();
-        userPassword = password.getText().toString();
+       if(!validInput()){
+           registrationError(regError);
+       }
+        else{
+           userName     = name.getText().toString();
+           userSurname  = surname.getText().toString();
+           userEmail    = email.getText().toString();
+           userPassword = password.getText().toString();
 
-        new RegistrationResponse().execute(new RegistrationAPI(userName,userSurname,userEmail,userPassword));
+           new RegistrationResponse().execute(new RegistrationAPI(userName,userSurname,userEmail,userPassword));
+       }
+
     }
 
     // setup the progress dialog
@@ -185,6 +226,23 @@ public class RegistrationDialog extends Activity implements LocationListener {
         progressDialog.dismiss();
     }
 
+    private void registrationError(String regErrorMsg){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationDialog.this);
+        builder.setTitle(R.string.error);
+        builder.setMessage(regError);
+        builder.setPositiveButton(R.string.ok,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog regErr = builder.create();
+        regErr.show();
+
+    }
+
 
    private class RegistrationResponse extends AsyncTask<RegistrationAPI,Long,JSONArray> {
 
@@ -197,35 +255,45 @@ public class RegistrationDialog extends Activity implements LocationListener {
 
        @Override
        protected JSONArray doInBackground(RegistrationAPI... params) {
+           // Return the response from RegistrationAPI
            return params[0].getRegistrationResponse();
        }
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            String response;
 
-            for(int i = 0; i <jsonArray.length();i++){
                 try{
-                    JSONObject json = jsonArray.getJSONObject(i);
+                    String response;
 
-                    // stores result from userRegistration.php
-                    response = json.getString("response");
+                    for(int i = 0; i <jsonArray.length();i++){
+                        JSONObject json = jsonArray.getJSONObject(i);
+
+                        // stores result from userRegistration.php
+                        response = json.getString("response");
 
                     if(response.equals("true")){
                         finish();
                         Toast.makeText(RegistrationDialog.this,"Registration complete",Toast.LENGTH_LONG).show();
                     }
                     else{
-                        Log.v("--REGISTRATION ERROR--", "" + response);
+                        // Display the error in an alert dialog
+                        registrationError(response);
                     }
                 }
+
+                }
                 catch (JSONException e) {
-                    e.printStackTrace();
+                    registrationError(e.toString());
+                }
+                catch(NullPointerException e){
+                    registrationError(e.toString());
+                }
+                catch(Exception e){
+                    registrationError(e.toString());
                 }
                 finally {
                     stopRegistrationProgressDialog();
                 }
-            }
         }
     }
 }

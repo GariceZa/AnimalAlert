@@ -88,8 +88,26 @@ public class LoginActivity extends Activity {
         loginFailed.show();
     }
 
+
+    private void exceptionError(String errResponse){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        builder.setTitle(R.string.error);
+        builder.setMessage(errResponse);
+        builder.setPositiveButton(R.string.ok,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog exception = builder.create();
+        exception.show();
+
+    }
+
     // AsyncTask to check users credentials on background thread
-    private class LoginResponse extends AsyncTask<LoginAPI,Long,JSONArray>{
+    private class LoginResponse extends AsyncTask<LoginAPI,Long,JSONArray> {
 
         @Override
         protected void onPreExecute() {
@@ -105,29 +123,35 @@ public class LoginActivity extends Activity {
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            String response;
 
-            for(int i = 0; i <jsonArray.length();i++){
-                try{
+            try {
+                String response;
+
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject json = jsonArray.getJSONObject(i);
 
                     // stores result from login.php
                     response = json.getString("response");
 
-                    if(response.equals("true")){
+                    if (response.equals("true")) {
                         finish();
-                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                    }
-                    else{
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    } else {
                         loginError();
                     }
                 }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                finally {
-                    stopLoginProgressDialog();
-                }
+            }
+            catch (JSONException e) {
+                exceptionError(e.toString());
+            }
+            catch(NullPointerException e){
+                exceptionError(e.toString());
+            }
+            catch(Exception e){
+                exceptionError(e.toString());
+            }
+            finally {
+                stopLoginProgressDialog();
             }
         }
     }
