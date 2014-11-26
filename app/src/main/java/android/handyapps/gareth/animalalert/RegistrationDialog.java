@@ -36,7 +36,8 @@ public class RegistrationDialog extends Activity implements LocationListener {
     private LatLng coOrdinates;
     private ProgressDialog progressDialog;
     private EditText name,surname,email,password,confirmPassword;
-    private String userName,userSurname,userEmail,userPassword,userLocation,regError;
+    private String userName,userSurname,userEmail,userPassword,streetAddress,regError;
+    private double lat,lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +144,9 @@ public class RegistrationDialog extends Activity implements LocationListener {
     public void onLocationChanged(Location location) {
         coOrdinates = new LatLng(location.getLatitude(), location.getLongitude());
         userAddress.setText(displayAddress(coOrdinates));
+        lat = location.getLatitude();
+        lon = location.getLongitude();
+
     }
 
     @Override
@@ -200,8 +204,9 @@ public class RegistrationDialog extends Activity implements LocationListener {
            userSurname  = surname.getText().toString();
            userEmail    = email.getText().toString();
            userPassword = password.getText().toString();
+           streetAddress = userAddress.getText().toString();
 
-           new RegistrationResponse().execute(new RegistrationAPI(userName,userSurname,userEmail,userPassword));
+           new RegistrationResponse().execute(new RegistrationAPI(userName,userSurname,userEmail,userPassword,streetAddress,lat,lon));
        }
 
     }
