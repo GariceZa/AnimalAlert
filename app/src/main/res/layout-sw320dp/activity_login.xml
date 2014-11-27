@@ -24,15 +24,6 @@
         android:layout_below="@id/username"
         android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
-    <CheckBox
-        android:id="@+id/chkRememberMe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/remember_me"
-        android:textSize="10sp"
-        android:layout_below="@id/password"
-        android:layout_marginTop="@dimen/activity_vertical_margin"/>
-
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="wrap_content"
