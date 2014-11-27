@@ -1,7 +1,5 @@
 package android.handyapps.gareth.animalalert;
 
-import android.util.Log;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -61,7 +59,6 @@ public class RegistrationAPI {
                 try {
                     String entityResponse = EntityUtils.toString(httpEntity);
                     entityResponse = "[" + entityResponse + "]";
-                    Log.e("--RESPONSE--",entityResponse);
                     jsonArray = new JSONArray(entityResponse);
                 }
                 catch (IOException e) {

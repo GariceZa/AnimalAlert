@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+
 
 public class LoginActivity extends Activity {
 
@@ -28,6 +30,14 @@ public class LoginActivity extends Activity {
 
         email       = (EditText)findViewById(R.id.username);
         password    = (EditText)findViewById(R.id.password);
+
+        // If email & password shared preferences are saved then login
+        File prefsFile = new File("/data/data/" + getPackageName() +  "/shared_prefs/" + "userInfo.xml");
+        if(prefsFile.exists()){
+            Preferences prefs = new Preferences();
+            new LoginResponse().execute(new LoginAPI(prefs.getEmailSharedPrefs(this),prefs.getPasswordSharedPrefs(this)));
+        }
+        //-------------------------------------
     }
 
     // Called when the user clicks login

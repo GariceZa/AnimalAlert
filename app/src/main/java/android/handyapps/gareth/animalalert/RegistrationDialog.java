@@ -248,7 +248,6 @@ public class RegistrationDialog extends Activity implements LocationListener {
 
     }
 
-
    private class RegistrationResponse extends AsyncTask<RegistrationAPI,Long,JSONArray> {
 
 
@@ -276,16 +275,20 @@ public class RegistrationDialog extends Activity implements LocationListener {
                         // stores result from userRegistration.php
                         response = json.getString("response");
 
-                    if(response.equals("true")){
-                        finish();
-                        Toast.makeText(RegistrationDialog.this,getResources().getString(R.string.registration_complete),Toast.LENGTH_LONG).show();
+                        if(response.equals("true")){
+                            //Save email and password
+                            Preferences prefs = new Preferences();
+                            prefs.setSharedPrefs(RegistrationDialog.this,userEmail,userPassword);
+                            // Alert user that registration was successful
+                            Toast.makeText(RegistrationDialog.this,getResources().getString(R.string.registration_complete),Toast.LENGTH_LONG).show();
+                            // Close the registration dialog
+                            finish();
+                        }
+                        else{
+                            // Display the error in an alert dialog
+                            registrationError(response);
+                        }
                     }
-                    else{
-                        // Display the error in an alert dialog
-                        registrationError(response);
-                    }
-                }
-
                 }
                 catch (JSONException e) {
                     registrationError(e.toString());
