@@ -18,7 +18,7 @@ public class LoginAPI {
 
     private String email,password;
 
-    public LoginAPI(String em,String pass){
+    public LoginAPI(String em, String pass){
         email = em;
         password = pass;
     }

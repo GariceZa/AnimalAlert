@@ -30,11 +30,19 @@ public class LoginActivity extends Activity {
         password    = (EditText)findViewById(R.id.password);
     }
 
+    // Called when the user clicks login
     public void login(View view) {
 
-        userEmail      = email.getText().toString();
-        userPassword   = password.getText().toString();
+        userEmail      = email.getText().toString().trim();
+        userPassword   = password.getText().toString().trim();
 
+        // If the the username or password field is empty
+        if(userEmail.isEmpty() || userPassword.isEmpty()){
+            // Show this error
+            exceptionError(getResources().getString(R.string.username_password_empty));
+        }
+        else
+        // Validate the users credentials
         new LoginResponse().execute(new LoginAPI(userEmail,userPassword));
 
     }
@@ -50,7 +58,7 @@ public class LoginActivity extends Activity {
        }
     }
 
-    // setup the progress dialog
+    // setup the progress dialog wheel
     private void startLoginProgressDialog(){
 
         String title = getResources().getString(R.string.logging_in);
@@ -71,24 +79,7 @@ public class LoginActivity extends Activity {
         progressDialog.dismiss();
     }
 
-    // displays an alert dialog if the users credentials are incorrect
-    private void loginError(){
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-        builder.setTitle(R.string.error);
-        builder.setMessage(R.string.username_password_incorrect);
-        builder.setPositiveButton(R.string.ok,new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        AlertDialog loginFailed = builder.create();
-        loginFailed.show();
-    }
-
-
+    // Used to display and errors with an alert dialog
     private void exceptionError(String errResponse){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
@@ -137,7 +128,7 @@ public class LoginActivity extends Activity {
                         finish();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     } else {
-                        loginError();
+                        exceptionError(getResources().getString(R.string.username_password_incorrect));
                     }
                 }
             }

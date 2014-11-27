@@ -134,7 +134,7 @@ public class RegistrationDialog extends Activity implements LocationListener {
         catch(Exception Err)
         {
             //display any errors in this toast
-            Toast.makeText(this, "Error: " + Err, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.error) + ": " + Err, Toast.LENGTH_LONG).show();
         }
 
         return address;
@@ -142,11 +142,11 @@ public class RegistrationDialog extends Activity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        // Get the coordinates and set the views
         coOrdinates = new LatLng(location.getLatitude(), location.getLongitude());
         userAddress.setText(displayAddress(coOrdinates));
         lat = location.getLatitude();
         lon = location.getLongitude();
-
     }
 
     @Override
@@ -278,7 +278,7 @@ public class RegistrationDialog extends Activity implements LocationListener {
 
                     if(response.equals("true")){
                         finish();
-                        Toast.makeText(RegistrationDialog.this,"Registration complete",Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegistrationDialog.this,getResources().getString(R.string.registration_complete),Toast.LENGTH_LONG).show();
                     }
                     else{
                         // Display the error in an alert dialog

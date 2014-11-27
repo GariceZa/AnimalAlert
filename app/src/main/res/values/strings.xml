@@ -18,6 +18,7 @@
     <string name="ok">OK</string>
     <string name="logging_in">Logging In</string>
     <string name="registering">Registering Your Account</string>
+    <string name="registration_complete">Registration complete</string>
     <string name="please_wait">Please wait...</string>
     <string name="username_password_incorrect">Username or password incorrect</string>
     <string name="email">Email</string>
@@ -25,6 +26,7 @@
     <string name="address_not_detected">Your address is still being detected</string>
     <string name="email_invalid">Enter a valid email address</string>
     <string name="password_mismatch">Passwords do not match</string>
+    <string name="username_password_empty">Username or password field cannot be empty</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
 
