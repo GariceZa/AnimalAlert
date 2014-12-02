@@ -28,6 +28,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
      * {@link android.support.v13.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
+    public static FragmentManager fragmentManager;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -38,6 +39,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fragmentManager = getFragmentManager();
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
