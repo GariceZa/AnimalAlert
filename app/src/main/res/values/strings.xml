@@ -29,6 +29,11 @@
     <string name="username_password_empty">Username or password field cannot be empty</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
-
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_section1">Maps</string>
+    <string name="title_section2">Alert Details</string>
+    <string name="title_section3">Create Alert</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
