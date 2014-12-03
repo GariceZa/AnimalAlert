@@ -1,20 +1,35 @@
 package android.handyapps.gareth.animalalert;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.ViewGroup;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 
 /**
  * Created by Gareth on 2014-12-02.
  */
-public class MapsFragment extends Fragment {
+public class MapsFragment extends MapFragment {
+
+    private GoogleMap mMap;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps,container,false);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setUpMapIfNeeded();
     }
 
+    private void setUpMapIfNeeded() {
+        // Do a  check to confirm that the map is not already instantiated
+        if (mMap == null) {
+            // obtain the map from the SupportMapFragment.
+            mMap = getMap();
+            // Check if obtaining the map was successful
+            if (mMap != null) {
+                mMap.setMyLocationEnabled(true);
+            }
+        }
+    }
 }
