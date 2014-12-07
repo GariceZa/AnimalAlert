@@ -1,19 +1,39 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".LoginActivity"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".LoginActivity"
+    android:orientation="vertical"
     android:background="#E0E0E0">
 
+    <android.handyapps.gareth.animalalert.FloatLabelLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="16dp"
+        app:floatLabelTextAppearance="@style/TextAppearance.animalalert.FloatLabel">
 
     <EditText
         android:id="@+id/username"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
         android:hint="@string/email"
         android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
+    </android.handyapps.gareth.animalalert.FloatLabelLayout>
+
+    <android.handyapps.gareth.animalalert.FloatLabelLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="16dp"
+        app:floatLabelTextAppearance="@style/TextAppearance.animalalert.FloatLabel">
 
     <EditText
         android:id="@+id/password"
@@ -21,41 +41,37 @@
         android:layout_height="wrap_content"
         android:password="true"
         android:hint="@string/password"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
         android:layout_below="@id/username"
         android:layout_marginTop="@dimen/activity_vertical_margin"/>
+    </android.handyapps.gareth.animalalert.FloatLabelLayout>
 
-    <CheckBox
-        android:id="@+id/chkRememberMe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/remember_me"
-        android:textSize="10sp"
-        android:layout_below="@id/password"
-        android:layout_marginTop="@dimen/activity_vertical_margin"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register"
+                android:background="@drawable/custom_btn_click"
+                android:layout_toStartOf="@+id/btnLogin"
+                android:layout_toLeftOf="@+id/btnLogin"
+                android:onClick="register"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register"
-        android:background="@drawable/custom_btn_click"
-        android:layout_below="@id/password"
-        android:layout_toStartOf="@+id/btnLogin"
-        android:layout_toLeftOf="@+id/btnLogin"
-        android:onClick="register"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+                android:background="@drawable/custom_btn_click"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:onClick="login"
+                android:layout_marginTop="@dimen/activity_vertical_margin"/>
+            </RelativeLayout>
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login"
-        android:background="@drawable/custom_btn_click"
-        android:layout_below="@id/password"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="login"
-        android:layout_marginTop="@dimen/activity_vertical_margin"/>
-
-</RelativeLayout>
+</LinearLayout>

@@ -9,7 +9,12 @@
     <!-- setting the color of the actionbar -->
     <style name="ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">#f68c06</item>
+    </style>
 
+    <style name="TextAppearance.animalalert.FloatLabel" parent="android:TextAppearance.Small">
+        <item name="android:textColor">@color/float_label</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

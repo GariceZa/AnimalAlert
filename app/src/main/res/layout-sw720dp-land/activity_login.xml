@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin_sw720dp"
-    android:paddingLeft="@dimen/edit_text_margin_padding_portrait"
+    android:paddingTop="@dimen/activity_vertical_margin_sw720dp_land"
+    android:paddingLeft="@dimen/activity_padding_left_sw720dp_land"
     tools:context=".LoginActivity"
     android:orientation="vertical"
     android:background="#E0E0E0">
@@ -12,8 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="720p portrait"
-        />
+        android:text="720dp land"/>
 
     <android.handyapps.gareth.animalalert.FloatLabelLayout
         android:layout_height="wrap_content"
@@ -23,7 +22,7 @@
 
         <EditText
             android:id="@+id/username"
-            android:layout_width="@dimen/edit_text_width_sw720dp"
+            android:layout_width="@dimen/edit_text_width_sw720dp_land"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:singleLine="true"
@@ -35,13 +34,13 @@
 
     <android.handyapps.gareth.animalalert.FloatLabelLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         app:floatLabelTextAppearance="@style/TextAppearance.animalalert.FloatLabel">
 
         <EditText
             android:id="@+id/password"
-            android:layout_width="@dimen/edit_text_width_sw720dp"
+            android:layout_width="@dimen/edit_text_width_sw720dp_land"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="@string/password"
@@ -52,7 +51,7 @@
     </android.handyapps.gareth.animalalert.FloatLabelLayout>
 
     <RelativeLayout
-        android:layout_width="@dimen/activity_button_layout_sw720dp"
+        android:layout_width="@dimen/activity_button_layout_sw720dp_land"
         android:layout_height="match_parent">
 
         <Button
@@ -65,7 +64,7 @@
             android:layout_toLeftOf="@+id/btnLogin"
             android:onClick="register"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+            android:layout_marginRight="@dimen/activity_horizontal_margin_Button_Gap"/>
 
         <Button
             android:id="@+id/btnLogin"
