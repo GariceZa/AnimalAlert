@@ -8,10 +8,12 @@
 
 
     <!-- 320dp -->
+        <dimen name="activity_horizontal_margin_registration_sw320dp">20dp</dimen>
     <!-- 320dp -->
 
     <!-- 480dp -->
         <dimen name="activity_layout_width_sw480dp">300dp</dimen>
+        <dimen name="activity_horizontal_margin_registration_sw480dp">75dp</dimen>
     <!-- 480dp -->
 
     <!-- 600dp -->
@@ -38,19 +40,6 @@
         <dimen name="activity_horizontal_margin_Button_Gap">10dp</dimen>
         <dimen name="edit_text_margin_padding_portrait">200dp</dimen>
     <!-- 720dp -->
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </resources>

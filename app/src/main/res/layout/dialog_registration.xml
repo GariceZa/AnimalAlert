@@ -2,8 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingLeft="100dp"
+    android:paddingRight="100dp"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin">
 
@@ -23,6 +23,8 @@
             android:id="@+id/regFirstName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:hint="@string/firstname" />
 
@@ -30,6 +32,8 @@
             android:id="@+id/regSurame"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:hint="@string/surname" />
 
@@ -37,6 +41,8 @@
             android:id="@+id/regEmail"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:hint="@string/email" />
@@ -45,6 +51,8 @@
             android:id="@+id/regPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:hint="@string/password"
             android:password="true" />
@@ -53,6 +61,8 @@
             android:id="@+id/regConfirmPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:hint="@string/confirm_password"
             android:password="true" />
