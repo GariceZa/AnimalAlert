@@ -16,8 +16,14 @@
 
     <!-- 600dp -->
         <dimen name="activity_horizontal_margin_sw600dp">10dp</dimen>
-        <dimen name="activity_vertical_margin_sw600dp">130dp</dimen>
-        <dimen name="activity_layout_width_sw600dp">350dp</dimen>
+        <dimen name="activity_vertical_margin_sw600dp">250dp</dimen>
+        <dimen name="activity_vertical_margin_sw600dp_land">100dp</dimen>
+        <dimen name="activity_padding_left_sw600dp_land">270dp</dimen>
+        <dimen name="activity_layout_width_sw600dp">250dp</dimen>
+        <dimen name="edit_text_margin_padding_portrait_sw600dp">175dp</dimen>
+        <dimen name="edit_text_width_sw600dp_land">400dp</dimen>
+        <dimen name="activity_button_layout_sw600dp">250dp</dimen>
+        <dimen name="activity_button_layout_sw600dp_land">400dp</dimen>
     <!-- 600dp -->
 
     <!-- 720dp -->
