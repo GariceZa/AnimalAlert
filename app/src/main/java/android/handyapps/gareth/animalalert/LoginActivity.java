@@ -27,11 +27,6 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        email       = (FormEditText)findViewById(R.id.username);
-        password    = (FormEditText)findViewById(R.id.password);
-
         // If email & password shared preferences are saved then login
         File prefsFile = new File("/data/data/" + getPackageName() +  "/shared_prefs/" + "userInfo.xml");
         if(prefsFile.exists()){
@@ -39,6 +34,11 @@ public class LoginActivity extends Activity {
             new LoginResponse().execute(new LoginAPI(prefs.getEmailSharedPrefs(this),prefs.getPasswordSharedPrefs(this)));
         }
         //-------------------------------------
+        else{
+            setContentView(R.layout.activity_login);
+            email       = (FormEditText)findViewById(R.id.username);
+            password    = (FormEditText)findViewById(R.id.password);
+        }
     }
 
     // Called when the user clicks login
@@ -136,7 +136,12 @@ public class LoginActivity extends Activity {
                     response = json.getString("response");
 
                     if (response.equals("true")) {
+                        // Save email and password to shared prefs
+                        Preferences prefs = new Preferences();
+                        prefs.setSharedPrefs(LoginActivity.this,userEmail,userPassword);
+                        // Close the login activity
                         finish();
+                        // Launch MainActivity
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     } else {
                         exceptionError(getResources().getString(R.string.username_password_incorrect));
