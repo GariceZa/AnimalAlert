@@ -12,12 +12,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andreabaccega.widget.FormEditText;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -35,7 +34,7 @@ public class RegistrationDialog extends Activity implements LocationListener {
     private TextView userAddress;
     private LatLng coOrdinates;
     private ProgressDialog progressDialog;
-    private EditText name,surname,email,password,confirmPassword;
+    private FormEditText name,surname,email,password,confirmPassword;
     private String userName,userSurname,userEmail,userPassword,streetAddress,regError;
     private double lat,lon;
 
@@ -56,11 +55,11 @@ public class RegistrationDialog extends Activity implements LocationListener {
     // setting ui views
     private void setupRegistrationViews(){
 
-        name            = (EditText)findViewById(R.id.regFirstName);
-        surname         = (EditText)findViewById(R.id.regSurame);
-        email           = (EditText)findViewById(R.id.regEmail);
-        password        = (EditText)findViewById(R.id.regPassword);
-        confirmPassword = (EditText)findViewById(R.id.regConfirmPassword);
+        name            = (FormEditText)findViewById(R.id.regFirstName);
+        surname         = (FormEditText)findViewById(R.id.regSurame);
+        email           = (FormEditText)findViewById(R.id.regEmail);
+        password        = (FormEditText)findViewById(R.id.regPassword);
+        confirmPassword = (FormEditText)findViewById(R.id.regConfirmPassword);
         userAddress     = (TextView)findViewById(R.id.regLocation);
     }
 
@@ -167,19 +166,8 @@ public class RegistrationDialog extends Activity implements LocationListener {
     // Validates the users registration input
     private boolean validInput(){
 
-        // If any fields are empty
-        if(name.getText().toString().trim().length() == 0 || surname.getText().toString().trim().length() == 0
-                || email.getText().toString().trim().length() == 0 || password.getText().toString().trim().length() == 0 || confirmPassword.getText().toString().trim().length() == 0) {
-            regError = getResources().getString(R.string.empty_field);
-            return false;
-        }
-        // If the email address is not valid
-        else if(!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
-            regError = getResources().getString(R.string.email_invalid);
-            return false;
-        }
         // If the passwords do not match
-        else if(!password.getText().toString().trim().equals(confirmPassword.getText().toString().trim())){
+        if(!password.getText().toString().trim().equals(confirmPassword.getText().toString().trim())){
             regError = getResources().getString(R.string.password_mismatch);
             return false;
         }
@@ -196,19 +184,26 @@ public class RegistrationDialog extends Activity implements LocationListener {
     // called when user clicks register
     public void registerUser(View view) {
 
-       if(!validInput()){
-           registrationError(regError);
-       }
-        else{
-           userName     = name.getText().toString();
-           userSurname  = surname.getText().toString();
-           userEmail    = email.getText().toString();
-           userPassword = password.getText().toString();
-           streetAddress = userAddress.getText().toString();
+        FormEditText[] registrationFields = {name,surname,email,password,confirmPassword};
+        boolean fieldsValid = true;
 
-           new RegistrationResponse().execute(new RegistrationAPI(userName,userSurname,userEmail,userPassword,streetAddress,lat,lon));
-       }
+        for(FormEditText field: registrationFields){
+            fieldsValid = field.testValidity() && fieldsValid;
+        }
+        if(fieldsValid){
+            if(!validInput()){
+                registrationError(regError);
+            }
+            else{
+                userName        = name.getText().toString();
+                userSurname     = surname.getText().toString();
+                userEmail       = email.getText().toString();
+                userPassword    = password.getText().toString();
+                streetAddress   = userAddress.getText().toString();
 
+                new RegistrationResponse().execute(new RegistrationAPI(userName,userSurname,userEmail,userPassword,streetAddress,lat,lon));
+            }
+        }
     }
 
     // setup the progress dialog

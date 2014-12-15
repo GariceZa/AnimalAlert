@@ -2,6 +2,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:validator="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,8 +30,9 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             app:floatLabelTextAppearance="@style/TextAppearance.animalalert.FloatLabel">
 
-            <EditText
+            <com.andreabaccega.widget.FormEditText
                 android:id="@+id/regFirstName"
+                validator:testType="personName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/firstname"
@@ -45,8 +47,9 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             app:floatLabelTextAppearance="@style/TextAppearance.animalalert.FloatLabel">
 
-            <EditText
+            <com.andreabaccega.widget.FormEditText
                 android:id="@+id/regSurame"
+                validator:testType="personName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/surname"
@@ -61,8 +64,9 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             app:floatLabelTextAppearance="@style/TextAppearance.animalalert.FloatLabel">
 
-            <EditText
+            <com.andreabaccega.widget.FormEditText
                 android:id="@+id/regEmail"
+                validator:testType="email"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
@@ -78,8 +82,9 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             app:floatLabelTextAppearance="@style/TextAppearance.animalalert.FloatLabel">
 
-            <EditText
+            <com.andreabaccega.widget.FormEditText
                 android:id="@+id/regPassword"
+                validator:testType="alphaNumeric"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
@@ -95,8 +100,9 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             app:floatLabelTextAppearance="@style/TextAppearance.animalalert.FloatLabel">
 
-            <EditText
+            <com.andreabaccega.widget.FormEditText
                 android:id="@+id/regConfirmPassword"
+                validator:testType="alphaNumeric"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/regPassword"

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:validator="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="100dp"
@@ -19,8 +21,9 @@
             android:layout_height="wrap_content"
             android:text="std"/>
 
-        <EditText
+        <com.andreabaccega.widget.FormEditText
             android:id="@+id/regFirstName"
+            validator:testType="personName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -28,8 +31,9 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:hint="@string/firstname" />
 
-        <EditText
+        <com.andreabaccega.widget.FormEditText
             android:id="@+id/regSurame"
+            validator:testType="personName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -37,8 +41,9 @@
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:hint="@string/surname" />
 
-        <EditText
+        <com.andreabaccega.widget.FormEditText
             android:id="@+id/regEmail"
+            validator:testType="email"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -47,8 +52,9 @@
             android:layout_marginTop="@dimen/activity_vertical_registration_margin"
             android:hint="@string/email" />
 
-        <EditText
+        <com.andreabaccega.widget.FormEditText
             android:id="@+id/regPassword"
+            validator:testType="alphaNumeric"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -57,8 +63,9 @@
             android:hint="@string/password"
             android:password="true" />
 
-        <EditText
+        <com.andreabaccega.widget.FormEditText
             android:id="@+id/regConfirmPassword"
+            validator:testType="alphaNumeric"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"

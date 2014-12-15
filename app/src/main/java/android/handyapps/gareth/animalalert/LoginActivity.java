@@ -56,20 +56,6 @@ public class LoginActivity extends Activity {
             userPassword   = password.getText().toString().trim();
             new LoginResponse().execute(new LoginAPI(userEmail,userPassword));
         }
-
-
-//        userEmail      = email.getText().toString().trim();
-//        userPassword   = password.getText().toString().trim();
-//
-//        // If the the username or password field is empty
-//        if(userEmail.isEmpty() || userPassword.isEmpty()){
-//            // Show this error
-//            exceptionError(getResources().getString(R.string.username_password_empty));
-//        }
-//        else
-//        // Validate the users credentials
-//        new LoginResponse().execute(new LoginAPI(userEmail,userPassword));
-
     }
 
     public void register(View view) {
