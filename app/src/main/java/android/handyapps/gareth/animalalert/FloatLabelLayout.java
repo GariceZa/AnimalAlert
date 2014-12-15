@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 /**
  * Created by Gareth on 2014-12-06.
+ * for info go to the following github project: https://gist.github.com/chrisbanes/11247418
  */
 public class FloatLabelLayout extends FrameLayout {
 
