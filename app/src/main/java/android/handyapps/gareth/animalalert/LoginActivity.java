@@ -8,7 +8,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+
+import com.andreabaccega.widget.FormEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +20,7 @@ import java.io.File;
 
 public class LoginActivity extends Activity {
 
-    private EditText email,password;
+    private FormEditText email,password;
     private String userEmail,userPassword;
     private ProgressDialog progressDialog;
 
@@ -28,8 +29,8 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        email       = (EditText)findViewById(R.id.username);
-        password    = (EditText)findViewById(R.id.password);
+        email       = (FormEditText)findViewById(R.id.username);
+        password    = (FormEditText)findViewById(R.id.password);
 
         // If email & password shared preferences are saved then login
         File prefsFile = new File("/data/data/" + getPackageName() +  "/shared_prefs/" + "userInfo.xml");
@@ -43,17 +44,31 @@ public class LoginActivity extends Activity {
     // Called when the user clicks login
     public void login(View view) {
 
-        userEmail      = email.getText().toString().trim();
-        userPassword   = password.getText().toString().trim();
+        FormEditText[] loginFields = {email,password};
+        boolean fieldsValid = true;
 
-        // If the the username or password field is empty
-        if(userEmail.isEmpty() || userPassword.isEmpty()){
-            // Show this error
-            exceptionError(getResources().getString(R.string.username_password_empty));
+        for(FormEditText field: loginFields){
+            fieldsValid = field.testValidity() && fieldsValid;
         }
-        else
-        // Validate the users credentials
-        new LoginResponse().execute(new LoginAPI(userEmail,userPassword));
+
+        if(fieldsValid){
+            userEmail      = email.getText().toString().trim();
+            userPassword   = password.getText().toString().trim();
+            new LoginResponse().execute(new LoginAPI(userEmail,userPassword));
+        }
+
+
+//        userEmail      = email.getText().toString().trim();
+//        userPassword   = password.getText().toString().trim();
+//
+//        // If the the username or password field is empty
+//        if(userEmail.isEmpty() || userPassword.isEmpty()){
+//            // Show this error
+//            exceptionError(getResources().getString(R.string.username_password_empty));
+//        }
+//        else
+//        // Validate the users credentials
+//        new LoginResponse().execute(new LoginAPI(userEmail,userPassword));
 
     }
 
