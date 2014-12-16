@@ -135,15 +135,21 @@ public class LoginActivity extends Activity {
                     // stores result from login.php
                     response = json.getString("response");
 
+                    // If the users credentials are valid
                     if (response.equals("true")) {
-                        // Save email and password to shared prefs
+
+                        //Check if the credentials are saved to shared prefs
                         Preferences prefs = new Preferences();
-                        prefs.setSharedPrefs(LoginActivity.this,userEmail,userPassword);
+                        if(!prefs.sharedPrefsAreSet(LoginActivity.this)){
+                            // Save email and password to shared prefs
+                            prefs.setSharedPrefs(LoginActivity.this,userEmail,userPassword);
+                        }
                         // Close the login activity
                         finish();
                         // Launch MainActivity
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    } else {
+                    }
+                    else {
                         exceptionError(getResources().getString(R.string.username_password_incorrect));
                     }
                 }
