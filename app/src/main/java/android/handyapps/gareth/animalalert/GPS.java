@@ -1,7 +1,6 @@
 package android.handyapps.gareth.animalalert;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -24,7 +23,7 @@ public class GPS {
         else
             // Alerts the user that google play services is not installed and
             // provides the user with a link to the play store to get the service
-            ((Dialog) GooglePlayServicesUtil.getErrorDialog(status, (Activity) context, 10)).show();
+            GooglePlayServicesUtil.getErrorDialog(status, (Activity) context, 10).show();
         return false;
     }
 }

@@ -36,11 +36,9 @@ public class RegistrationAPI {
         JSONArray jsonArray = null;
         try {
 
-            String url = null;
-            url = "http://animalalert.garethprice.co.za/registerUser.php?name=" + name + "&surname=" + surname + "&email=" + email + "&password=" + password + "&address=" + URLEncoder.encode(address, "UTF-8") + "&latitude=" + latitude + "&longitude=" +longitude;
+            String url = "http://animalalert.garethprice.co.za/registerUser.php?name=" + name + "&surname=" + surname + "&email=" + email + "&password=" + password + "&address=" + URLEncoder.encode(address, "UTF-8") + "&latitude=" + latitude + "&longitude=" + longitude;
 
             HttpEntity httpEntity;
-
 
             // Creating a new DefaultHttpClient to establish connection
             DefaultHttpClient httpClient = new DefaultHttpClient();

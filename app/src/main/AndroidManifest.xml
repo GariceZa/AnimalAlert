@@ -25,9 +25,14 @@
             android:label="@string/register"
             android:theme="@android:style/Theme.Holo.Light.Dialog" >
         </activity>
+
         <activity
             android:name="android.handyapps.gareth.animalalert.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/app_name" >
+        </activity>
+
+        <activity
+            android:name="android.handyapps.gareth.animalalert.Preferences" >
         </activity>
 
         <meta-data

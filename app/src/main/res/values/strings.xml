@@ -9,9 +9,6 @@
     <string name="register">Register</string>
     <string name="cancel">Cancel</string>
     <string name="detecting_address">Detecting your address...</string>
-    <string name="remember_me">Remember me</string>
-    <string name="registration_details">Enter your details</string>
-    <string name="title_activity_google_play_services">GooglePlayServices</string>
     <string name="firstname">Firstname</string>
     <string name="surname">Surname</string>
     <string name="error">Error</string>
@@ -22,21 +19,11 @@
     <string name="please_wait">Please wait...</string>
     <string name="username_password_incorrect">Username or password incorrect</string>
     <string name="email">Email</string>
-    <string name="empty_field">Please fill in all fields</string>
     <string name="address_not_detected">Your address is still being detected</string>
-    <string name="email_invalid">Enter a valid email address</string>
     <string name="password_mismatch">Passwords do not match</string>
-    <string name="username_password_empty">Username or password field cannot be empty</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_section1">Maps</string>
-    <string name="title_section2">Alerts</string>
-    <string name="title_section3">Create Alert</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_maps_activity_test">Map</string>
-    <string name="title_activity_maps">Map</string>
     <string name="action_signout">Sign out</string>
 
 </resources>

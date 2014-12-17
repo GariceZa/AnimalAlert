@@ -19,7 +19,7 @@ public class Preferences extends Activity {
         edit.putString("email",email);
         edit.putString("password",password);
 
-        edit.commit();
+        edit.apply();
     }
 
     // Saves username & password to shared prefs
@@ -31,7 +31,7 @@ public class Preferences extends Activity {
         edit.putString("email","");
         edit.putString("password","");
 
-        edit.commit();
+        edit.apply();
     }
 
     // Returns the stored email address
