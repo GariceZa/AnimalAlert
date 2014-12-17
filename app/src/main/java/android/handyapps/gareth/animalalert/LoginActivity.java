@@ -15,8 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-
 
 public class LoginActivity extends Activity {
 
@@ -28,9 +26,8 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // If email & password shared preferences are saved then login
-        File prefsFile = new File("/data/data/" + getPackageName() +  "/shared_prefs/" + "userInfo.xml");
-        if(prefsFile.exists()){
-            Preferences prefs = new Preferences();
+        Preferences prefs = new Preferences();
+        if(prefs.sharedPrefsAreSet(LoginActivity.this)){
             new LoginResponse().execute(new LoginAPI(prefs.getEmailSharedPrefs(this),prefs.getPasswordSharedPrefs(this)));
         }
         //-------------------------------------

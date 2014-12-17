@@ -1,17 +1,17 @@
 package android.handyapps.gareth.animalalert;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
+
 
 /**
  * Created by Gareth on 2014-12-02.
  */
-public class MapsFragment extends MapFragment {
+public class MapsFragment extends SupportMapFragment {
 
     private GoogleMap mMap;
 

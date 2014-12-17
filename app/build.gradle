@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:support-v13:21.0.2'
     compile 'com.android.support:appcompat-v7:21.0.2'
     compile 'com.andreabaccega:android-form-edittext:1.1.0@aar'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 }

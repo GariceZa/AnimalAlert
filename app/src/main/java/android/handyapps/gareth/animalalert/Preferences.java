@@ -21,6 +21,19 @@ public class Preferences extends Activity {
 
         edit.commit();
     }
+
+    // Saves username & password to shared prefs
+    protected void removeSharedPrefs(Context context){
+
+        SharedPreferences setUserInfo = context.getSharedPreferences("userInfo",0);
+        SharedPreferences.Editor edit = setUserInfo.edit();
+
+        edit.putString("email","");
+        edit.putString("password","");
+
+        edit.commit();
+    }
+
     // Returns the stored email address
     protected String getEmailSharedPrefs(Context context){
 
