@@ -32,6 +32,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
     private MyPagerAdapter adapter;
+    TextView alertLocation;
 
 
     @Override
@@ -85,7 +86,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         public void sendAlert(View view) {
 
             EditText alertDetails = (EditText)findViewById(R.id.alertDescription);
-            TextView alertLocation = (TextView)findViewById(R.id.alertLocation);
+            alertLocation = (TextView)findViewById(R.id.alertLocation);
 
             if(TextUtils.isEmpty(alertDetails.getText().toString())){
                 alertDetails.setError(getResources().getString(R.string.description_missing));
@@ -133,7 +134,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
 
             LocationManager locMan = (LocationManager)getSystemService(LOCATION_SERVICE);
             String provider = LocationManager.GPS_PROVIDER;
-            locMan.requestLocationUpdates(provider, 2000, 5, this);
+            locMan.requestLocationUpdates(provider, 10000, 5, this);
         }
 
         // Determines if the GPS location service is on
@@ -147,7 +148,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
             // Get the location lat/lng
             LatLng coOrdinates = new LatLng(location.getLatitude(), location.getLongitude());
             // Find view
-            TextView alertLocation = (TextView)findViewById(R.id.alertLocation);
+            alertLocation = (TextView)findViewById(R.id.alertLocation);
             // Set view text
             alertLocation.setText(coOrdinates.toString());
         }
@@ -170,7 +171,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
     //------------------------------------------------------------------------------
     public class MyPagerAdapter extends FragmentPagerAdapter{
 
-        private final String[] TITLES = {"Alert Map","Alert List","Create Alert"};
+        private final String[] TITLES = {"Add Sighting","Recent Sightings","Sightings Map"};
 
 
         public MyPagerAdapter(FragmentManager fm) {
@@ -186,13 +187,11 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new MapsFragment();
-
+                    return new AddAlertFragment();
                 case 1:
                     return new AlertsFragment();
-
                 case 2:
-                    return new AddAlertFragment();
+                     return new MapsFragment();
             }
 
             return null;

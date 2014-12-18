@@ -3,7 +3,6 @@ package android.handyapps.gareth.animalalert;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 /**
  * Created by Gareth on 2014-11-27.
@@ -52,10 +51,8 @@ public class Preferences extends Activity {
     protected boolean sharedPrefsAreSet(Context context){
 
         if(getEmailSharedPrefs(context).equals("") && getPasswordSharedPrefs(context).equals("")){
-            Log.v("---Shared prefs---","NOT SET");
             return false;
         }
-        Log.v("---Shared prefs---","SET");
         return true;
     }
 }

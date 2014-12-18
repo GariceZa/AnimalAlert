@@ -226,7 +226,7 @@ public class RegistrationDialog extends Activity implements LocationListener {
         progressDialog.dismiss();
     }
 
-    private void registrationError(String regErrorMsg){
+    private void registrationError(String regError){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationDialog.this);
         builder.setTitle(R.string.error);
