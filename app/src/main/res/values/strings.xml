@@ -6,9 +6,12 @@
     <string name="enable">Enable</string>
     <string name="enable_location_service_title">Enable Location Services</string>
     <string name="enable_location_service_message">Your location services are off, to register it needs to be on</string>
+    <string name="enable_location_service">Your location services are off, to use this application it needs to be on</string>
     <string name="register">Register</string>
     <string name="cancel">Cancel</string>
     <string name="detecting_address">Detecting your address...</string>
+    <string name="detecting_location">Detecting your location...</string>
+    <string name="still_detecting_location">location being detected, please wait...</string>
     <string name="firstname">Firstname</string>
     <string name="surname">Surname</string>
     <string name="error">Error</string>
@@ -25,5 +28,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="action_settings">Settings</string>
     <string name="action_signout">Sign out</string>
+    <string name="alert_description_hint">What did you see</string>
+    <string name="description_missing">Please fill in a description</string>
 
 </resources>
