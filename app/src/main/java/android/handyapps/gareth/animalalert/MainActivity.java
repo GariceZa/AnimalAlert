@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,12 +33,41 @@ public class MainActivity extends FragmentActivity implements LocationListener {
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
     private MyPagerAdapter adapter;
-    TextView alertLocation;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.v("--ANDROID LIFECYCLE--","ON RESUME");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.v("--ANDROID LIFECYCLE--", "ON PAUSE");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.v("--ANDROID LIFECYCLE--", "ON STOP");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.v("--ANDROID LIFECYCLE--", "ON START");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.v("--ANDROID LIFECYCLE--", "ON RESTART");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v("--ANDROID LIFECYCLE--","ON CREATE");
         setContentView(R.layout.activity_main);
 
         //Setting up the sliding page tabs
@@ -55,7 +85,6 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         else{
             locationServiceDisabledAlert();
         }
-
     }
 
     @Override
@@ -86,7 +115,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         public void sendAlert(View view) {
 
             EditText alertDetails = (EditText)findViewById(R.id.alertDescription);
-            alertLocation = (TextView)findViewById(R.id.alertLocation);
+            TextView alertLocation = (TextView)findViewById(R.id.alertLocation);
 
             if(TextUtils.isEmpty(alertDetails.getText().toString())){
                 alertDetails.setError(getResources().getString(R.string.description_missing));
@@ -134,7 +163,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
 
             LocationManager locMan = (LocationManager)getSystemService(LOCATION_SERVICE);
             String provider = LocationManager.GPS_PROVIDER;
-            locMan.requestLocationUpdates(provider, 10000, 5, this);
+            locMan.requestLocationUpdates(provider,5000,0, this);
         }
 
         // Determines if the GPS location service is on
@@ -145,12 +174,19 @@ public class MainActivity extends FragmentActivity implements LocationListener {
 
         @Override
         public void onLocationChanged(Location location) {
-            // Get the location lat/lng
-            LatLng coOrdinates = new LatLng(location.getLatitude(), location.getLongitude());
-            // Find view
-            alertLocation = (TextView)findViewById(R.id.alertLocation);
-            // Set view text
-            alertLocation.setText(coOrdinates.toString());
+            TextView alertLocation = (TextView)findViewById(R.id.alertLocation);
+            LatLng coOrdinates;
+
+            if(location.getAccuracy() < 20){
+                // Get the location lat/lng
+                coOrdinates = new LatLng(location.getLatitude(), location.getLongitude());
+                // Set view text to latlng, if the user navigates to another tab the text view gets destroyed hence the check if it is null
+                if(alertLocation != null){
+                    alertLocation.setText(coOrdinates.toString());
+                }
+
+                Log.v("--LOCATION DATA--: ","lat/lng: " + coOrdinates.toString() + " accuracy: " + location.getAccuracy());
+            }
         }
 
         @Override
