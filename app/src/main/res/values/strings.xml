@@ -30,5 +30,9 @@
     <string name="action_signout">Sign out</string>
     <string name="alert_description_hint">What did you see</string>
     <string name="description_missing">Please fill in a description</string>
+    <string name="add_alert_title">Detecting...</string>
+    <string name="add_alert_message">Detecting current position</string>
+    <string name="save_alert_title">Saving...</string>
+    <string name="save_alert_message">Saving your alert</string>
 
 </resources>

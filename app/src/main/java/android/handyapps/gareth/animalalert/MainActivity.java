@@ -1,11 +1,13 @@
 package android.handyapps.gareth.animalalert;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,56 +20,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.google.android.gms.maps.model.LatLng;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Gareth on 2014-12-17.
  * for info go to the following github project: https://github.com/astuetz/PagerSlidingTabStrip
  */
-public class MainActivity extends FragmentActivity implements LocationListener {
+public class MainActivity extends FragmentActivity {
 
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
     private MyPagerAdapter adapter;
+    private ProgressDialog progressDialog;
+    private double lat,lon;
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.v("--ANDROID LIFECYCLE--","ON RESUME");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.v("--ANDROID LIFECYCLE--", "ON PAUSE");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.v("--ANDROID LIFECYCLE--", "ON STOP");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.v("--ANDROID LIFECYCLE--", "ON START");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.v("--ANDROID LIFECYCLE--", "ON RESTART");
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v("--ANDROID LIFECYCLE--","ON CREATE");
         setContentView(R.layout.activity_main);
 
         //Setting up the sliding page tabs
@@ -79,10 +55,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         //-------------------------
 
         // Checking location services are enabled
-        if(locationServiceEnabled()){
-            setupLocationUpdates();
-        }
-        else{
+        if(!locationServiceEnabled()){
             locationServiceDisabledAlert();
         }
     }
@@ -113,19 +86,13 @@ public class MainActivity extends FragmentActivity implements LocationListener {
 
         // Validates user input and adds alert to database
         public void sendAlert(View view) {
-
             EditText alertDetails = (EditText)findViewById(R.id.alertDescription);
-            TextView alertLocation = (TextView)findViewById(R.id.alertLocation);
 
             if(TextUtils.isEmpty(alertDetails.getText().toString())){
                 alertDetails.setError(getResources().getString(R.string.description_missing));
             }
-            else if(alertLocation.getText().equals(getResources().getString(R.string.detecting_location))){
-                Toast.makeText(getApplicationContext(),getResources().getString(R.string.still_detecting_location),Toast.LENGTH_LONG).show();
-            }
             else{
-                //save data to db via asynctask
-                Toast.makeText(getApplicationContext(),"All good",Toast.LENGTH_SHORT).show();
+                new UpdateLocationCoordinates().execute();
             }
         }
 
@@ -136,7 +103,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
             locationServiceAlert.setTitle(R.string.enable_location_service_title)
                     .setMessage(R.string.enable_location_service)
                     .setCancelable(true)
-                    .setPositiveButton(R.string.enable,new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.enable, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //opens the location service settings
@@ -158,56 +125,50 @@ public class MainActivity extends FragmentActivity implements LocationListener {
             alert.show();
         }
 
-        // Sets the provider and update intervals
-        private void setupLocationUpdates(){
-
-            LocationManager locMan = (LocationManager)getSystemService(LOCATION_SERVICE);
-            String provider = LocationManager.GPS_PROVIDER;
-            locMan.requestLocationUpdates(provider,5000,0, this);
-        }
-
         // Determines if the GPS location service is on
         private boolean locationServiceEnabled() {
             LocationManager locMan = (LocationManager) getSystemService(LOCATION_SERVICE);
             return locMan.isProviderEnabled(LocationManager.GPS_PROVIDER);
         }
 
-        @Override
-        public void onLocationChanged(Location location) {
-            TextView alertLocation = (TextView)findViewById(R.id.alertLocation);
-            LatLng coOrdinates;
+        // Displays an indeterminate progress dialog
+        private void startProgressDialog(String title,String message){
 
-            if(location.getAccuracy() < 20){
-                // Get the location lat/lng
-                coOrdinates = new LatLng(location.getLatitude(), location.getLongitude());
-                // Set view text to latlng, if the user navigates to another tab the text view gets destroyed hence the check if it is null
-                if(alertLocation != null){
-                    alertLocation.setText(coOrdinates.toString());
-                }
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setTitle(title);
+            progressDialog.setMessage(message);
+            progressDialog.setCancelable(true);
+            progressDialog.setIndeterminate(true);
+            progressDialog.show();
+        }
 
-                Log.v("--LOCATION DATA--: ","lat/lng: " + coOrdinates.toString() + " accuracy: " + location.getAccuracy());
+        // Removes the progress dialog
+        private void stopProgressDialog(){
+            progressDialog.dismiss();
+        }
+
+        // Displays any error messages in an alert dialog
+        private void saveError(String regError){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(R.string.error);
+        builder.setMessage(regError);
+        builder.setPositiveButton(R.string.ok,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
             }
-        }
+        });
 
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            // Do nothing
-        }
+        AlertDialog regErr = builder.create();
+        regErr.show();
 
-        @Override
-        public void onProviderEnabled(String provider) {
-            // Do nothing
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            // Do nothing
-        }
+    }
 
     //------------------------------------------------------------------------------
     public class MyPagerAdapter extends FragmentPagerAdapter{
 
-        private final String[] TITLES = {"Add Sighting","Recent Sightings","Sightings Map"};
+        private final String[] TITLES = {"Sightings Map","Recent Sightings","Add Sighting"};
 
 
         public MyPagerAdapter(FragmentManager fm) {
@@ -223,11 +184,11 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new AddAlertFragment();
+                    return new MapsFragment();
                 case 1:
                     return new AlertsFragment();
                 case 2:
-                     return new MapsFragment();
+                     return new AddAlertFragment();
             }
 
             return null;
@@ -236,6 +197,131 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         @Override
         public int getCount() {
             return TITLES.length;
+        }
+    }
+
+    private class UpdateLocationCoordinates extends AsyncTask<Void,Void,Location> implements LocationListener{
+
+        private LocationManager locMan;
+        private Location location;
+        private String provider;
+
+        // Sets the provider and update intervals
+        private void setupLocationUpdates(){
+
+            locMan = (LocationManager)getSystemService(LOCATION_SERVICE);
+            provider = LocationManager.GPS_PROVIDER;
+            locMan.requestLocationUpdates(provider,1000,0, this);
+
+        }
+
+        private void setLatLon(Location location){
+            lat = location.getLatitude();
+            lon = location.getLongitude();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            setupLocationUpdates();
+            startProgressDialog(getResources().getString(R.string.add_alert_title),getResources().getString(R.string.add_alert_message));
+        }
+
+        @Override
+        protected Location doInBackground(Void... params) {
+
+            while(location == null){
+             //Wait for location to be initialized
+            }
+            while(location.getAccuracy() >= 25){
+             //Wait for location accuracy to < 25 meters
+            }
+            return location;
+        }
+
+        @Override
+        protected void onPostExecute(Location location) {
+            locMan.removeUpdates(this);
+            setLatLon(location);
+            stopProgressDialog();
+
+            // Starting AddAlertResponse Asynctask
+            Preferences prefs = new Preferences();
+            EditText alertDetails = (EditText)findViewById(R.id.alertDescription);
+            new AddAlertResponse().execute(new AddAlertAPI(prefs.getEmailSharedPrefs(getApplicationContext()),alertDetails.getText().toString(),lat,lon));
+            //------------------------------------
+
+        }
+
+        @Override
+        public void onLocationChanged(Location newLocation) {
+                location = newLocation;
+                Log.v("--LOCATION--","lat/lng: " + newLocation.getLatitude() + " " + newLocation.getLongitude() + " Accuracy: " + newLocation.getAccuracy());
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            Log.i("--onStatusChanged","Status Changed " + status);
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            Log.i("--onProviderEnabled","Provider Enabled " + provider);
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            Log.i("--onProviderDisabled","Provider Disabled " + provider);
+        }
+    }
+
+    private class AddAlertResponse extends AsyncTask<AddAlertAPI,Long,JSONArray> {
+
+
+        @Override
+        protected void onPreExecute() {
+            startProgressDialog(getResources().getString(R.string.save_alert_title),getResources().getString(R.string.save_alert_message));
+        }
+
+        @Override
+        protected JSONArray doInBackground(AddAlertAPI... params) {
+            // Return the response from RegistrationAPI
+            return params[0].getAddAlertResponse();
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            String response="";
+            try {
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject json = jsonArray.getJSONObject(i);
+
+                    // stores result from addAlert.php
+                    response = json.getString("response");
+
+                    Log.v("--RESPONSE--",response);
+
+                    if (response.equals("true")) {
+                        Toast.makeText(getApplicationContext(), "Alert saved", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+            catch (JSONException e) {
+                Log.v("--JSONException--",e.toString());
+            }
+            catch (NullPointerException e) {
+                Log.v("--NullPointerException--",e.toString());
+            }
+            catch (Exception e) {
+                Log.v("--Exception--",e.toString());
+            }
+            finally {
+                stopProgressDialog();
+                if(!response.equals("true")){
+                    saveError(response);
+                }
+            }
         }
     }
 }
