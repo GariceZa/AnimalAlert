@@ -20,14 +20,6 @@
         android:singleLine="true"
         android:imeOptions="actionDone"/>
 
-    <TextView
-        android:id="@+id/alertLocation"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:gravity="center"
-        android:text="@string/detecting_location"/>
-
     <Button
         android:id="@+id/sendAlert"
         android:layout_width="wrap_content"

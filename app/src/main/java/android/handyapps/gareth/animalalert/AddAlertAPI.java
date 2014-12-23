@@ -19,14 +19,16 @@ import java.net.URLEncoder;
  */
 public class AddAlertAPI {
 
-    private String email,description;
+    private String email,description,date;
     private double latitude,longitude;
 
-    public AddAlertAPI(String em,String de,Double lat,Double lon){
+
+    public AddAlertAPI(String em,String de,Double lat,Double lon,String dt){
         email          = em;
         description    = de;
         latitude       = lat;
         longitude      = lon;
+        date           = dt;
     }
 
     public JSONArray getAddAlertResponse() {
@@ -34,7 +36,7 @@ public class AddAlertAPI {
         JSONArray jsonArray = null;
 
         try{
-            String url = "http://animalalert.garethprice.co.za/addAlert.php?email=" + email + "&description=" + URLEncoder.encode(description,"UTF-8") + "&latitude=" + latitude + "&longitude=" + longitude;
+            String url = "http://animalalert.garethprice.co.za/addAlert.php?email=" + email + "&description=" + URLEncoder.encode(description,"UTF-8") + "&latitude=" + latitude + "&longitude=" + longitude + "&date=" +URLEncoder.encode(date,"UTF-8");
             HttpEntity httpEntity;
 
             // Creating a new DefaultHttpClient to establish connection

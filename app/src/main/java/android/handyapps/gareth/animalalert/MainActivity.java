@@ -28,6 +28,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by Gareth on 2014-12-17.
  * for info go to the following github project: https://github.com/astuetz/PagerSlidingTabStrip
@@ -58,6 +61,8 @@ public class MainActivity extends FragmentActivity {
         if(!locationServiceEnabled()){
             locationServiceDisabledAlert();
         }
+
+
     }
 
     @Override
@@ -125,7 +130,7 @@ public class MainActivity extends FragmentActivity {
             alert.show();
         }
 
-        // Determines if the GPS location service is on
+        // Determines if location services are enabled
         private boolean locationServiceEnabled() {
             LocationManager locMan = (LocationManager) getSystemService(LOCATION_SERVICE);
             return locMan.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -205,6 +210,8 @@ public class MainActivity extends FragmentActivity {
         private LocationManager locMan;
         private Location location;
         private String provider;
+        private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss");
+        private String alertDate;
 
         // Sets the provider and update intervals
         private void setupLocationUpdates(){
@@ -247,7 +254,8 @@ public class MainActivity extends FragmentActivity {
             // Starting AddAlertResponse Asynctask
             Preferences prefs = new Preferences();
             EditText alertDetails = (EditText)findViewById(R.id.alertDescription);
-            new AddAlertResponse().execute(new AddAlertAPI(prefs.getEmailSharedPrefs(getApplicationContext()),alertDetails.getText().toString(),lat,lon));
+            alertDate = df.format(Calendar.getInstance().getTime());
+            new AddAlertResponse().execute(new AddAlertAPI(prefs.getEmailSharedPrefs(getApplicationContext()),alertDetails.getText().toString(),lat,lon,alertDate));
             //------------------------------------
 
         }
@@ -276,6 +284,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     private class AddAlertResponse extends AsyncTask<AddAlertAPI,Long,JSONArray> {
+
 
 
         @Override
