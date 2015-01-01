@@ -35,11 +35,6 @@ public class AlertsFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -59,7 +54,7 @@ public class AlertsFragment extends Fragment {
             mLayoutManager = new GridLayoutManager(getActivity(),2);
             mRecyclerView.setLayoutManager(mLayoutManager);
         }
-        // If screen size is > 720 then use grid layout with 3 columns
+        // else the screen size is > 720, use grid layout with 3 columns
         else{
             mLayoutManager = new GridLayoutManager(getActivity(),3);
             mRecyclerView.setLayoutManager(mLayoutManager);
@@ -98,7 +93,7 @@ public class AlertsFragment extends Fragment {
                 }
 
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.v("--IOException--", e.toString());
             }
 
             return resp;
@@ -119,15 +114,16 @@ public class AlertsFragment extends Fragment {
                         time.add(jsonObject.getString("AlertTime"));
                         msg.add(jsonObject.getString("AlertDescription"));
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Log.v("--JSONException--",e.toString());
                     }
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+                Log.v("--JSONException--",e.toString());
             }
 
             // Specify an adapter
             mAdapter = new AlertMessageAdapter(time,msg);
+            // Set the adapter
             mRecyclerView.setAdapter(mAdapter);
         }
     }

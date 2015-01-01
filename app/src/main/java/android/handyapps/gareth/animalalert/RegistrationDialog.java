@@ -12,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -286,13 +287,13 @@ public class RegistrationDialog extends Activity implements LocationListener {
                     }
                 }
                 catch (JSONException e) {
-                    registrationError(e.toString());
+                    Log.v("--JSONException--", e.toString());
                 }
                 catch(NullPointerException e){
-                    registrationError(e.toString());
+                    Log.v("--NullPointerException--", e.toString());
                 }
                 catch(Exception e){
-                    registrationError(e.toString());
+                    Log.v("--Exception--", e.toString());
                 }
                 finally {
                     stopRegistrationProgressDialog();

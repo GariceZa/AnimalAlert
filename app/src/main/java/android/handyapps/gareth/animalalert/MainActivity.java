@@ -190,7 +190,7 @@ public class MainActivity extends FragmentActivity {
                 case 1:
                     return new AlertsFragment();
                 case 2:
-                     return new AddAlertFragment();
+                    return new AddAlertFragment();
             }
 
             return null;

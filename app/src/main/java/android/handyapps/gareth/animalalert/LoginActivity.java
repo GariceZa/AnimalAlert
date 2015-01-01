@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.andreabaccega.widget.FormEditText;
@@ -152,13 +153,13 @@ public class LoginActivity extends Activity {
                 }
             }
             catch (JSONException e) {
-                exceptionError(e.toString());
+                Log.v("--JSONException--", e.toString());
             }
             catch(NullPointerException e){
-                exceptionError(e.toString());
+                Log.v("--NullPointerException--", e.toString());
             }
             catch(Exception e){
-                exceptionError(e.toString());
+                Log.v("--Exception--", e.toString());
             }
             finally {
                 stopLoginProgressDialog();
