@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "android.handyapps.gareth.animalalert"
-        minSdkVersion 19
+        minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -26,4 +26,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.2'
     compile 'com.andreabaccega:android-form-edittext:1.1.0@aar'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.android.support:cardview-v7:21.0.+'
+    compile 'com.android.support:recyclerview-v7:21.0.+'
 }

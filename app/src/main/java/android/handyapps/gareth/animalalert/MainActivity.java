@@ -43,7 +43,6 @@ public class MainActivity extends FragmentActivity {
     private ProgressDialog progressDialog;
     private double lat,lon;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +60,6 @@ public class MainActivity extends FragmentActivity {
         if(!locationServiceEnabled()){
             locationServiceDisabledAlert();
         }
-
-
     }
 
     @Override
@@ -286,7 +283,6 @@ public class MainActivity extends FragmentActivity {
     private class AddAlertResponse extends AsyncTask<AddAlertAPI,Long,JSONArray> {
 
 
-
         @Override
         protected void onPreExecute() {
             startProgressDialog(getResources().getString(R.string.save_alert_title),getResources().getString(R.string.save_alert_message));
@@ -333,4 +329,5 @@ public class MainActivity extends FragmentActivity {
             }
         }
     }
+
 }

@@ -7,6 +7,13 @@
         <dimen name="activity_registration_textsize">18sp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
 
+    <!-- row_layout.xml -->
+        <dimen name="margin">5dp</dimen>
+        <dimen name="cardCornerRadius">5dp</dimen>
+        <dimen name="dateTimeTextSize">18sp</dimen>
+        <dimen name="dateTimeLayoutHeight">20dp</dimen>
+        <dimen name="alertMessageTextSize">15sp</dimen>
+    <!-- row_layout.xml -->
 
     <!-- 320dp -->
         <dimen name="activity_horizontal_margin_registration_sw320dp">20dp</dimen>
