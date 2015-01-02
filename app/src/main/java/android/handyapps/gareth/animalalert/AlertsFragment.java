@@ -78,7 +78,7 @@ public class AlertsFragment extends Fragment {
 
         @Override
         protected String doInBackground(Void... params) {
-            String resp = null;
+            String response = null;
             String url = "http://animalalert.garethprice.co.za/selectAlerts.php";
             HttpEntity httpEntity;
 
@@ -89,14 +89,14 @@ public class AlertsFragment extends Fragment {
                 httpEntity = httpResponse.getEntity();
 
                 if (httpEntity != null) {
-                    resp = EntityUtils.toString(httpEntity);
+                    response = EntityUtils.toString(httpEntity);
                 }
 
             } catch (IOException e) {
                 Log.v("--IOException--", e.toString());
             }
 
-            return resp;
+            return response;
         }
 
         @Override

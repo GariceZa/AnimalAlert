@@ -11,7 +11,7 @@
         <dimen name="margin">5dp</dimen>
         <dimen name="cardCornerRadius">5dp</dimen>
         <dimen name="dateTimeTextSize">18sp</dimen>
-        <dimen name="dateTimeLayoutHeight">20dp</dimen>
+        <dimen name="dateTimeLayoutHeight">20sp</dimen>
         <dimen name="alertMessageTextSize">15sp</dimen>
     <!-- row_layout.xml -->
 
