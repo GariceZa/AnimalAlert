@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,9 +31,10 @@ import java.util.ArrayList;
  */
 public class AlertsFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView                mRecyclerView;
+    private RecyclerView.Adapter        mAdapter;
+    private RecyclerView.LayoutManager  mLayoutManager;
+    private SwipeRefreshLayout          mSwipeRefreshLayout;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -59,15 +61,29 @@ public class AlertsFragment extends Fragment {
             mLayoutManager = new GridLayoutManager(getActivity(),3);
             mRecyclerView.setLayoutManager(mLayoutManager);
         }
+        //---------------------------------------------------
 
+        // Execute the async task to load alerts
         new LoadAlerts().execute();
-        //-------------------------
     }
 
+    // setting up the view during view creation
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       View view = inflater.inflate(R.layout.fragment_alerts,container,false);
+
+        View view = inflater.inflate(R.layout.fragment_alerts,container,false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+
+        // Setting up the swipe refresh layout
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new LoadAlerts().execute();
+            }
+        });
+
         return view;
     }
 
@@ -83,6 +99,7 @@ public class AlertsFragment extends Fragment {
             HttpEntity httpEntity;
 
             try {
+                // Returns the api response
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpGet httpGet = new HttpGet(url);
                 HttpResponse httpResponse = httpClient.execute(httpGet);
@@ -107,6 +124,7 @@ public class AlertsFragment extends Fragment {
             try{
                 JSONArray jsonArray = new JSONArray(s);
 
+                // Loads the array lists
                 for (int i = 0; i < jsonArray.length(); i++) {
 
                     try {
@@ -125,6 +143,8 @@ public class AlertsFragment extends Fragment {
             mAdapter = new AlertMessageAdapter(time,msg);
             // Set the adapter
             mRecyclerView.setAdapter(mAdapter);
+            // Set swipe refresh to false if swiped
+            mSwipeRefreshLayout.setRefreshing(false);
         }
     }
 }

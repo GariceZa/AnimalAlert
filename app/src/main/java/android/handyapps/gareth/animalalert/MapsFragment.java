@@ -30,7 +30,7 @@ import java.util.ArrayList;
  */
 public class MapsFragment extends SupportMapFragment {
 
-    private GoogleMap mMap;
+    private GoogleMap   mMap;
     ArrayList<LatLng>   latlng      = new ArrayList<>();
     ArrayList<String>   date        = new ArrayList<>();
     ArrayList<String>   description = new ArrayList<>();
@@ -38,37 +38,63 @@ public class MapsFragment extends SupportMapFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.v("OnViewCreated","run");
         new LoadPoints().execute();
     }
 
+
     private void setUpMapIfNeeded() {
-        // Do a  check to confirm that the map is not already instantiated
+
+        // Do a check to confirm that the map is not already instantiated
         if (mMap == null) {
+            Log.v("mMap", "NULL");
             // obtain the map from the SupportMapFragment.
             mMap = getMap();
             // Check if obtaining the map was successful
             if (mMap != null) {
                 mMap.setMyLocationEnabled(true);
-
                 // Adding markers for last 5 alerts
-                for(int i = 0;i < latlng.size();i++) {
-                    Marker marker = mMap.addMarker(new MarkerOptions()
-                            .position(latlng.get(i))
-                            .title(date.get(i))
-                            .snippet(description.get(i)));
-                }
+                addAlertMarkers();
             }
+        } else {
+            mMap.clear();
+            Log.v("--mMap--","CLEARED");
+            // Adding markers for last 5 alerts
+            addAlertMarkers();
+        }
+    }
+
+    // Adds markers to map of the last 5 alerts saved to the system
+    private void addAlertMarkers(){
+
+        for (int i = 0; i < latlng.size(); i++) {
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                    .position(latlng.get(i))
+                    .title(date.get(i))
+                    .snippet(description.get(i)));
+
         }
     }
 
     private class LoadPoints extends AsyncTask<Void,Void,String>{
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Clearing array lists
+            latlng.clear();
+            date.clear();
+            description.clear();
+        }
+
+        @Override
         protected String doInBackground(Void... params) {
+
             String response = null;
             String url = "http://animalalert.garethprice.co.za/selectAlertLocations.php";
             HttpEntity httpEntity;
 
+            // Returns the api response
             try {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpGet httpGet = new HttpGet(url);
@@ -93,7 +119,7 @@ public class MapsFragment extends SupportMapFragment {
 
             try {
                 JSONArray jsonArray = new JSONArray(s);
-
+                // Set array lists
                 for (int i = 0; i < jsonArray.length(); i++) {
 
                     try {
@@ -108,8 +134,8 @@ public class MapsFragment extends SupportMapFragment {
             } catch (JSONException e) {
                 Log.v("--JSONException--", e.toString());
             }
+            // Setup the map
             setUpMapIfNeeded();
-
         }
     }
 }

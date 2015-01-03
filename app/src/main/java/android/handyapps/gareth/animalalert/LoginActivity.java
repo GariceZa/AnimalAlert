@@ -19,14 +19,14 @@ import org.json.JSONObject;
 
 public class LoginActivity extends Activity {
 
-    private FormEditText email,password;
-    private String userEmail,userPassword;
-    private ProgressDialog progressDialog;
+    private FormEditText    email,password;
+    private String          userEmail,userPassword;
+    private ProgressDialog  progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // If email & password shared preferences are saved then login
+        // If email & password shared preferences are saved then login using them
         Preferences prefs = new Preferences();
         if(prefs.sharedPrefsAreSet(LoginActivity.this)){
             new LoginResponse().execute(new LoginAPI(prefs.getEmailSharedPrefs(this),prefs.getPasswordSharedPrefs(this)));
@@ -56,6 +56,7 @@ public class LoginActivity extends Activity {
         }
     }
 
+    // Called when the user clicks the register button
     public void register(View view) {
        // create GPS object
        GPS gps = new GPS(this);

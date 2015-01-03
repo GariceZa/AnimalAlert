@@ -37,11 +37,11 @@ import java.util.Calendar;
  */
 public class MainActivity extends FragmentActivity {
 
-    private PagerSlidingTabStrip tabs;
-    private ViewPager pager;
-    private MyPagerAdapter adapter;
-    private ProgressDialog progressDialog;
-    private double lat,lon;
+    private PagerSlidingTabStrip    tabs;
+    private ViewPager               pager;
+    private MyPagerAdapter          adapter;
+    private ProgressDialog          progressDialog;
+    private double                  lat,lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,7 +218,7 @@ public class MainActivity extends FragmentActivity {
             locMan.requestLocationUpdates(provider,1000,0, this);
 
         }
-
+        // Sets latitude and longitude
         private void setLatLon(Location location){
             lat = location.getLatitude();
             lon = location.getLongitude();
@@ -282,7 +282,6 @@ public class MainActivity extends FragmentActivity {
 
     private class AddAlertResponse extends AsyncTask<AddAlertAPI,Long,JSONArray> {
 
-
         @Override
         protected void onPreExecute() {
             startProgressDialog(getResources().getString(R.string.save_alert_title),getResources().getString(R.string.save_alert_message));
@@ -308,7 +307,18 @@ public class MainActivity extends FragmentActivity {
                     Log.v("--RESPONSE--",response);
 
                     if (response.equals("true")) {
+                        //Informing user that their alert has been saved
                         Toast.makeText(getApplicationContext(), "Alert saved", Toast.LENGTH_LONG).show();
+                        //--------------------------
+
+                        // Clearing the users input
+                        EditText alertDescription = (EditText)findViewById(R.id.alertDescription);
+                        alertDescription.setText("");
+                        //---------------------------
+                    }
+                    else{
+                        // Displaying api error response
+                        saveError(response);
                     }
                 }
             }

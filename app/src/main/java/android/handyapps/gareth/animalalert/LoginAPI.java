@@ -25,6 +25,7 @@ public class LoginAPI {
         password = pass;
     }
 
+    // Returns the api response
     public JSONArray getLoginResponse(){
 
         String url = "http://animalalert.garethprice.co.za/login.php?email=" + email + "&password=" + password;

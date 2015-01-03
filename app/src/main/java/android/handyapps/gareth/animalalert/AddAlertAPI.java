@@ -23,6 +23,7 @@ public class AddAlertAPI {
     private double latitude,longitude;
 
 
+    //Constructor to initialize variables
     public AddAlertAPI(String em,String de,Double lat,Double lon,String dt){
         email          = em;
         description    = de;
@@ -31,6 +32,7 @@ public class AddAlertAPI {
         date           = dt;
     }
 
+    // Returns the api response
     public JSONArray getAddAlertResponse() {
 
         JSONArray jsonArray = null;

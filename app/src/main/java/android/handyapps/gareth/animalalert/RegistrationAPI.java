@@ -32,7 +32,7 @@ public class RegistrationAPI {
         longitude   = lon;
 
     }
-
+    // // Returns the api response
     public JSONArray getRegistrationResponse(){
 
         JSONArray jsonArray = null;

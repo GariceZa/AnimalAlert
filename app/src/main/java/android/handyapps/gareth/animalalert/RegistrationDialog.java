@@ -32,23 +32,25 @@ import java.util.Locale;
  */
 public class RegistrationDialog extends Activity implements LocationListener {
 
-    private TextView userAddress;
-    private LatLng coOrdinates;
-    private ProgressDialog progressDialog;
-    private FormEditText name,surname,email,password,confirmPassword;
-    private String userName,userSurname,userEmail,userPassword,streetAddress,regError;
-    private double lat,lon;
+    private TextView        userAddress;
+    private LatLng          coOrdinates;
+    private ProgressDialog  progressDialog;
+    private FormEditText    name,surname,email,password,confirmPassword;
+    private String          userName,userSurname,userEmail,userPassword,streetAddress,regError;
+    private double          lat,lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // If location services are enabled on the device
         if(locationServiceEnabled()){
             setContentView(R.layout.dialog_registration);
             setupLocationUpdates();
             setupRegistrationViews();
         }
         else{
+            // Display an alert dialog if location services are off
             locationServiceDisabledAlert();
         }
     }

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class AlertMessageAdapter extends RecyclerView.Adapter<AlertMessageAdapter.ViewHolder> {
 
     ArrayList<String> timearr = new ArrayList<>();
-    ArrayList<String> msgarr = new ArrayList<>();
+    ArrayList<String> msgarr  = new ArrayList<>();
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -27,6 +27,7 @@ public class AlertMessageAdapter extends RecyclerView.Adapter<AlertMessageAdapte
         }
     }
 
+    // Constructor to initialize the arraylists
     public AlertMessageAdapter(ArrayList<String> myDataSetTime,ArrayList<String>myDataSetMsg) {
         timearr = myDataSetTime;
         msgarr = myDataSetMsg;

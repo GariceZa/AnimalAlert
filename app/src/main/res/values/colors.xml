@@ -3,4 +3,10 @@
     <color name = "btn_color">#f68c06</color>
     <color name="btn_click_color">@android:color/holo_blue_light</color>
     <color name="float_label">#ff004c8a</color>
+
+    <!-- swipe refresher view colors -->
+    <color name="orange">#f68c06</color>
+    <color name="green">#009900</color>
+    <color name="blue">#000099</color>
+    <!-- swipe refresher view colors -->
 </resources>

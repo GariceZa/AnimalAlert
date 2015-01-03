@@ -11,11 +11,7 @@ import android.view.ViewGroup;
  */
 public class AddAlertFragment extends Fragment  {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
+    // inflates the fragment for adding an alert
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_add_alert,container,false);
